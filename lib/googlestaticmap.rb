@@ -173,7 +173,7 @@ class GoogleStaticMap
     http = Net::HTTP.Proxy(@proxy_address,@proxy_port).new("maps.google.com", port)
     http.use_ssl = protocol == 'https'
 
-    resp = http.get2(relative_url(protocol))
+    resp = http.get2(URI.encode(relative_url(protocol).strip))
     if resp && resp.is_a?(Net::HTTPSuccess)
       if output_file
         File.open(output_file, "wb") {|f| f << resp.body }
